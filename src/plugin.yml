@@ -1,0 +1,11 @@
+name: DeityPortals
+main: com.imdeity.portals.DeityPortals
+version: 12.03.28
+language: english.yml
+authors: [vanZeben, ImDeity]
+website: http://www.ImDeity.com/
+depend: [DeityAPI]
+
+commands:
+    DeityPortals:
+        aliases: [dp]
