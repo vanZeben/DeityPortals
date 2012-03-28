@@ -9,36 +9,40 @@ import com.imdeity.portals.objects.Portal;
 
 public class PlayerPortalUseEvent extends Event implements Cancellable {
 
-	private Player player;
-	private Portal portal;
-	private boolean isCancelled;
-	private static final HandlerList HANDLERS = new HandlerList();
+    private Player player;
+    private Portal portal;
+    private boolean isCancelled;
+    private static final HandlerList HANDLERS = new HandlerList();
 
-	public PlayerPortalUseEvent(Player player, Portal portal) {
-		this.player = player;
-		this.portal = portal;
-	}
+    public PlayerPortalUseEvent(Player player, Portal portal) {
+        this.player = player;
+        this.portal = portal;
+    }
 
-	@Override
-	public HandlerList getHandlers() {
-		return PlayerPortalUseEvent.HANDLERS;
-	}
+    @Override
+    public HandlerList getHandlers() {
+        return PlayerPortalUseEvent.HANDLERS;
+    }
 
-	public Player getPlayer() {
-		return this.player;
-	}
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 
-	public Portal getPortal() {
-		return this.portal;
-	}
+    public Player getPlayer() {
+        return this.player;
+    }
 
-	@Override
-	public boolean isCancelled() {
-		return this.isCancelled;
-	}
+    public Portal getPortal() {
+        return this.portal;
+    }
 
-	@Override
-	public void setCancelled(boolean cancelled) {
-		this.isCancelled = cancelled;
-	}
+    @Override
+    public boolean isCancelled() {
+        return this.isCancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancelled) {
+        this.isCancelled = cancelled;
+    }
 }
