@@ -66,10 +66,11 @@ public class DeityPortals extends JavaPlugin implements CommandExecutor {
         this.getServer().getPluginManager().registerEvents(this.portalListener, this);
         DeityPortals.plugin = this;
         this.out("Enabled");
+        this.out(this.portals.size()+" portals loaded");
     }
 
     public void out(String msg) {
-        Deity.chat.out("DeityPortals", msg);
+        Deity.chat.out("[DeityPortals]", msg);
     }
 
     @Override
