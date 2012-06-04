@@ -9,26 +9,38 @@ public class Portal {
 
     public static Portal getPortal(Location location) {
         String world = location.getWorld().getName();
-        int origX = (int) location.getX();
-        int origY = (int) location.getY();
-        int origZ = (int) location.getZ();
+        int origX = location.getBlockX();
+        int origY = location.getBlockY();
+        int origZ = location.getBlockZ();
         for (Portal portal : DeityPortals.plugin.portals) {
             if (!portal.minPoint.getWorld().getName().equalsIgnoreCase(world)) {
                 continue;
             }
-            int minX = (int) portal.minPoint.getX();
-            int minY = (int) portal.minPoint.getY();
-            int minZ = (int) portal.minPoint.getZ();
-            if ((minX > origX) || (minY > origY) || (minZ > origZ)) {
-                continue;
+            int minX = portal.minPoint.getBlockX();
+            int minY = portal.minPoint.getBlockY();
+            int minZ = portal.minPoint.getBlockZ();
+
+            int maxX = portal.maxPoint.getBlockX();
+            int maxY = portal.maxPoint.getBlockY();
+            int maxZ = portal.maxPoint.getBlockZ();
+
+            if (minX > maxX) {
+                int tmp = minX;
+                minX = maxX;
+                maxX = tmp;
             }
-            int maxX = (int) portal.maxPoint.getX();
-            int maxY = (int) portal.maxPoint.getY();
-            int maxZ = (int) portal.maxPoint.getZ();
-            if ((maxX < origX) || (maxY < origY) || (maxZ < origZ)) {
-                continue;
+            if (minY > maxY) {
+                int tmp = minY;
+                minY = maxY;
+                maxY = tmp;
             }
-            return portal;
+            if (minZ > maxZ) {
+                int tmp = minZ;
+                minZ = maxZ;
+                maxZ = tmp;
+            }
+            if ((minX <= origX && origX <= maxX) && (minY <= origY && origY <= maxY) && (minZ <= origZ && origZ <= maxZ)) { return portal; }
+            continue;
         }
         return null;
     }

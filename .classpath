@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/Users/vanZeben/Dropbox/Public/Server/craftbukkit.jar"/>
 	<classpathentry kind="lib" path="/Users/vanZeben/Dropbox/Public/DeityUpdate/DeityAPI.jar"/>
+	<classpathentry kind="lib" path="/Users/vanZeben/Dropbox/Public/DeityUpdate/DeityWarp.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
