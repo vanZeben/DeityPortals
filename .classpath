@@ -2,8 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/vanZeben/Dropbox/Public/Server/craftbukkit.jar"/>
-	<classpathentry kind="lib" path="/Users/vanZeben/Dropbox/Public/DeityUpdate/DeityAPI.jar"/>
-	<classpathentry kind="lib" path="/Users/vanZeben/Dropbox/Public/DeityUpdate/DeityWarp.jar"/>
+	<classpathentry kind="lib" path="/Users/vanZeben/Documents/Minecraft/Testing Servers/Server2/craftbukkit.jar"/>
+	<classpathentry kind="lib" path="/Users/vanZeben/Dropbox/Public/DeityUpdate/DeityAPI-Public.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

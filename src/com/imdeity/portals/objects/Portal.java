@@ -2,66 +2,44 @@ package com.imdeity.portals.objects;
 
 import org.bukkit.Location;
 
-import com.imdeity.deityapi.Deity;
-import com.imdeity.portals.DeityPortals;
+import com.imdeity.deityapi.DeityAPI;
+import com.imdeity.portals.DeityPortalMain;
 
 public class Portal {
-
-    public static Portal getPortal(Location location) {
-        String world = location.getWorld().getName();
-        int origX = location.getBlockX();
-        int origY = location.getBlockY();
-        int origZ = location.getBlockZ();
-        for (Portal portal : DeityPortals.plugin.portals) {
-            if (!portal.minPoint.getWorld().getName().equalsIgnoreCase(world)) {
-                continue;
-            }
-            int minX = portal.minPoint.getBlockX();
-            int minY = portal.minPoint.getBlockY();
-            int minZ = portal.minPoint.getBlockZ();
-
-            int maxX = portal.maxPoint.getBlockX();
-            int maxY = portal.maxPoint.getBlockY();
-            int maxZ = portal.maxPoint.getBlockZ();
-
-            if (minX > maxX) {
-                int tmp = minX;
-                minX = maxX;
-                maxX = tmp;
-            }
-            if (minY > maxY) {
-                int tmp = minY;
-                minY = maxY;
-                maxY = tmp;
-            }
-            if (minZ > maxZ) {
-                int tmp = minZ;
-                minZ = maxZ;
-                maxZ = tmp;
-            }
-            if ((minX <= origX && origX <= maxX) && (minY <= origY && origY <= maxY) && (minZ <= origZ && origZ <= maxZ)) { return portal; }
-            continue;
-        }
-        return null;
-    }
-
+    
     public int id;
     public String command;
     public Location minPoint;
     public Location maxPoint;
-
-    public boolean isFromConsole;
-
-    public Portal(int id, String command, Location minPoint, Location maxPoint, boolean isFromConsole) {
+    public boolean executeFromConsole;
+    public int cost;
+    
+    public Portal(int id, String command, Location minPoint, Location maxPoint, boolean executeFromConsole, int cost) {
         this.id = id;
         this.command = command;
         this.minPoint = minPoint;
         this.maxPoint = maxPoint;
-        this.isFromConsole = isFromConsole;
+        this.executeFromConsole = executeFromConsole;
+        this.cost = cost;
     }
-
-    public void update() {
-        String sql = "UPDATE " + Deity.data.getDB().tableName("deity_", "portals") + " SET command = ?, perform_from_console = ? WHERE id = ?;";
-        Deity.data.getDB().Write(sql, this.command, (this.isFromConsole ? 1 : 0), this.id);
+    
+    public void save() {
+        String sql = "UPDATE " + DeityPortalMain.getPortalTableName() + " SET command = ?, execute_from_console = ?, cost = ? WHERE id = ?;";
+        DeityAPI.getAPI().getDataAPI().getMySQL().write(sql, this.command, (this.executeFromConsole ? 1 : 0), cost, this.id);
+    }
+    
+    public void remove() {
+        String sql = "DELETE FROM " + DeityPortalMain.getPortalTableName() + " WHERE `id` = ?;";
+        DeityAPI.getAPI().getDataAPI().getMySQL().write(sql, id);
+    }
+    
+    public String toPlayer() {
+        return "&8[&3" + id + "&8] &b/" + command + (executeFromConsole ? " &8[&7Console&8]" : " &8[&7Player&8]") + " &8[&7" + minPoint.getBlockX() + "&8,&7" + minPoint.getBlockY() + "&8,&7" + minPoint.getBlockZ() + " " + maxPoint.getBlockX() + "&8,&7" + maxPoint.getBlockY() + "&8,&7"
+                + maxPoint.getBlockZ() + "&8] " + (cost != 0 ? " &7[&6" + DeityAPI.getAPI().getEconAPI().getFormattedBalance(cost) + "]" : "");
+    }
+    
+    public String toConsole() {
+        return "[" + id + "]: /" + command + (executeFromConsole ? " [Console]" : " [Player]") + " [" + minPoint.getBlockX() + "," + minPoint.getBlockY() + "," + minPoint.getBlockZ() + " " + maxPoint.getBlockX() + "," + maxPoint.getBlockY() + "," + maxPoint.getBlockZ() + "]"
+                + (cost != 0 ? " [" + DeityAPI.getAPI().getEconAPI().getFormattedBalance(cost) + "]" : "");
     }
 }
